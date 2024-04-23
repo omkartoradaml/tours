@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bon Voyage Named Tours</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden; /* Prevent horizontal scrollbar */
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative; /* Position for airplane */
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo-container img {
+            width: 50px; /* Adjust logo width */
+            height: auto; /* Maintain aspect ratio */
+            margin-right: 10px;
+        }
+        .logo-container h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav {
+            background-color: #444;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            margin: 10px;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+            padding: 5px 10px;
+            border: 2px solid #ff4500; /* Red border */
+        }
+        nav a:hover {
+            text-decoration: underline;
+            color: #ff4500; /* Change color on hover */
+        }
+        section {
+            padding: 20px;
+        }
+        .swiper-container {
+            width: 100%;
+            height: 300px; /* Adjust height as needed */
+            margin-bottom: 20px;
+        }
+        .swiper-slide {
+            background-size: cover;
+            background-position: center;
+        }
+        .reviews {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .review-stars {
+            color: #ff4500; /* Orange color for stars */
+            font-size: 24px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            position: relative; /* Added for positioning the warning message */
+        }
+        footer div {
+            flex: 1;
+            margin: 10px;
+        }
+        footer h3 {
+            color: #ff4500; /* Orange color for headings */
+        }
+        footer p {
+            margin: 5px 0;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            text-decoration: underline;
+            color: #ff4500; /* Change color on hover */
+        }
+        .social-media {
+            flex: 1;
+            margin-top: 20px;
+        }
+        .social-media h3 {
+            color: #ff4500; /* Red color for heading */
+            margin-bottom: 10px;
+        }
+        .social-media img {
+            display: block;
+            margin: 5px auto;
+            width: 30px;
+            height: 30px;
+        }
+        .payment-methods {
+            flex: 1;
+            margin-top: 20px;
+        }
+        .payment-methods img {
+            display: block;
+            margin: 5px auto;
+            width: 50px;
+            height: 30px;
+        }
+        .search-container {
+            flex: 1;
+            text-align: right;
+            margin: 10px;
+        }
+        .search-container input[type=text] {
+            padding: 5px;
+            margin-top: 8px;
+            margin-right: 16px;
+            border: none;
+            font-size: 17px;
+        }
+        .search-container button {
+            padding: 5px;
+            margin-top: 8px;
+            background: #ff4500; /* Red background */
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .search-container button:hover {
+            background: #cc3700; /* Darker red background on hover */
+        }
+        .upload-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .upload-container label {
+            display: block;
+            background-color: #333;
+            color: #ff4500;
+            border: 2px solid #ff4500;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 60%; /* Adjust width */
+            margin: auto;
+            text-align: center;
+            font-size: 18px;
+        }
+        .upload-container label:hover {
+            background-color: #ff4500;
+            color: #333;
+        }
+        .upload-container input[type="file"] {
+            display: none;
+        }
+        .upload-container button {
+            margin-top: 10px;
+            background-color: #ff4500;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .upload-container button:hover {
+            background-color: #cc3700;
+        }
+        .country-select {
+            margin-top: 20px;
+        }
+        .country-select select {
+            padding: 10px;
+            font-size: 16px;
+            border: 2px solid #ff4500;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+        }
+        /* Airplane animation */
+        .airplane {
+            position: absolute;
+            top: 50%;
+            left: -100px; /* Start outside the screen */
+            animation: fly 10s linear infinite; /* Adjust duration and timing as needed */
+            transform-origin: center;
+        }
+        @keyframes fly {
+            0% {
+                transform: translateX(-100px) translateY(-50%) rotate(0deg);
+            }
+            100% {
+                transform: translateX(calc(100vw + 100px)) translateY(-50%) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1hCa9YWJyzP5Yd-th4BjuAPSsk3PcKqvUjMIBQM8lfw&s" alt="Bon Voyage Logo">
+            <h1>Bon Voyage Tours</h1>
+        </div>
+        <!-- Airplane animation -->
+        <img src="data:image/png;base64,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" alt="Airplane" class="airplane">
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Tours</a>
+            <a href="#">Contact</a>
+        </nav>
+        <div class="search-container">
+            <form action="#">
+                <input type="text" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <select id="packagesDropdown">
+            <option value="" selected disabled>Select a package</option>
+            <option value="Adventure Tour">Adventure Tour</option>
+            <option value="Chota Break">Chota Break</option>
+            <option value="Gujarati Special">Gujarati Special</option>
+            <option value="Honeymoon Special">Honeymoon Special</option>
+            <option value="Luxury Tours">Luxury Tours</option>
+            <option value="Marigold">Marigold</option>
+            <option value="My Fair Lady">My Fair Lady</option>
+            <option value="Second Innings">Second Innings</option>
+            <option value="Student Special">Student Special</option>
+            <option value="Veg Tour">Veg Tour</option>
+            <option value="Youth Special">Youth Special</option>
+        </select>
+    </header>
+    <section>
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide" style="background-image:url('https://img.freepik.com/free-vector/flat-design-travel-facebook-cover_23-2149130939.jpg')"></div>
+                <div class="swiper-slide" style="background-image:url('https://img.freepik.com/free-psd/travel-tourism-facebook-cover-template_106176-3067.jpg?size=626&ext=jpg&ga=GA1.1.735520172.1710288000&semt=ais')"></div>
+                <div class="swiper-slide" style="background-image:url('https://img.freepik.com/premium-vector/plane-banner-template_33800-145.jpg')"></div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="upload-container">
+            <label for="fileInput">Choose File</label>
+            <input type="file" id="fileInput" name="file" accept=".jpg, .jpeg, .txt, .pptx, .ppt, .doc, .docx, .zip, .mp4, .pdf, .xlsx">
+            <button type="button" onclick="uploadFile()">Submit</button>
+        </div>
+        <div class="country-select">
+            <h2>Choose your country</h2>
+            <select>
+                <option value="USA">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="Germany">Germany</option>
+                <option value="France">France</option>
+                <option value="Italy">Italy</option>
+                <option value="Spain">Spain</option>
+                <option value="Japan">Japan</option>
+                <option value="China">China</option>
+                <option value="India">India</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Russia">Russia</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Argentina">Argentina</option>
+                <option value="South Korea">South Korea</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Indonesia">Indonesia</option>
+                <option value="Nigeria">Nigeria</option>
+            </select>
+        </div>
+        <div class="reviews">
+            <h2>Customer Reviews</h2>
+            <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div> <!-- Example star review, adjust as needed -->
+            <p>Rated 4 out of 5 based on customer reviews.</p>
+        </div>
+    </section>
+    <footer>
+        <div>
+            <h3>About Us</h3>
+            <p>Learn about our company and mission.</p>
+        </div>
+        <div>
+            <h3>Destinations</h3>
+            <p>Africa</p>
+            <p>   America
+            </p>   America
+               <p>Australia NewZealand</p> 
+               <p> Bhutan</p>
+        </div>
+        <div>
+            <h3>Services</h3>
+            <p>Home</p>
+               <p>  Tours At a Glance</p>
+               <p> Best Tour</p>
+               <p>Speciality Tours</p>
+               <p>Economy Tours</p>
+              
+               
+            
+                
+        </div>
+        <div>
+            <h3>Contact Info</h3>
+            <p>Reach out to us:</p>
+            <p>123 Main Street, Pune, Kondhwa</p>
+            <p>bon@bonvoyagenamedtours.com</p>
+            <p>+91 0022562278</p>
+        </div>
+        <div class="social-media">
+            <h3>Connect with Us</h3>
+            <img src="https://imgs.search.brave.com/jheuiv4a4zOziT7mJee6bzUIPkJbxXlTtezzJ_lmOPY/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAzLzAwLzI0LzU5/LzM2MF9GXzMwMDI0/NTk1M19TdmloMURZ/SmJ3NHYydDkyRWhE/T1R3VzRMSXFNZ2ht/eS5qcGc" alt="Facebook">
+            <img src="https://imgs.search.brave.com/YNCQDhsoUn1RFP-5Sf8zKnP-iquu5nSW9gAZC4N5GFc/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzAzLzEzLzc1Lzgw/LzM2MF9GXzMxMzc1/ODA5N185ejZDQmtj/RG5rUjRnUmdjVzQ5/bTltM1pNTUpMeDFj/dy5qcGc" alt="Twitter">
+            <img src="https://imgs.search.brave.com/f0ol4IZiikdXNcXki69648EjsT3-9cTy23we9KXjuoE/rs:fit:860:0:0/g:ce/aHR0cHM6Ly93d3cu/bG9nby53aW5lL2Ev/bG9nby9JbnN0YWdy/YW0vSW5zdGFncmFt/LUxvZ28ud2luZS5z/dmc.svg" alt="Instagram">
+        </div>
+        <div class="payment-methods">
+            <img src="https://imgs.search.brave.com/hnEWY71pQ2ppfm4cD9jpoQUQasgB9hvQkrII3c5gNl8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jZG4w/Lmljb25maW5kZXIu/Y29tL2RhdGEvaWNv/bnMvc2hpZnQtZWNv/bW1lcmNlLzMyL1ZJ/U0EtMTI4LnBuZw" alt="Visa">
+            <img src="https://imgs.search.brave.com/pXSyD6qeuMY74XPqBeWO1GPGb6npx7LL_kE2WRRh3z8/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9sb2dv/d2lrLmNvbS9jb250/ZW50L3VwbG9hZHMv/aW1hZ2VzLzc4N19t/YXN0ZXJjYXJkLmpw/Zw" alt="Mastercard">
+            <img src="https://imgs.search.brave.com/F2X32YQLP77NPXmbREsXY2P3dZPYQYmrSrb3A9ycd9I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly8xMDAw/bG9nb3MubmV0L3dw/LWNvbnRlbnQvdXBs/b2Fkcy8yMDE3LzA1/L0NvbG9yLVBheXBh/bC1Mb2dvLTUwMHg0/MDQuanBn" alt="PayPal">
+        </div>
+    </footer>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            loop: true,
+            autoplay: {
+                delay: 3000, // Delay between transitions in milliseconds
+                randomize: true // Randomize slide order
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        });
+        
+        function uploadFile() {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            if (file) {
+                var fileSize = file.size; // in bytes
+                var validFormats = ['jpg', 'jpeg', 'txt', 'pptx', 'ppt', 'doc', 'docx', 'zip', 'mp4', 'pdf', 'xlsx'];
+                var fileExtension = file.name.split('.').pop().toLowerCase();
+                
+                if (fileSize > 50000000 || !validFormats.includes(fileExtension)) {
+                    alert("File size should be less than 50000KB & File only in jpg jpeg txt pptx ppt doc docx zip mp4 pdf xlsx Format!!!");
+                } else {
+                    // File is valid, proceed with uploading
+                    // Simulating file upload with a timeout
+                    setTimeout(function() {
+                        alert("File successfully added");
+                    }, 2000);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
